@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Музыкальный сайт 📱</title>
+    <link rel="icon" type="image/jpeg" href="Logo.jpg">  <!-- Favicon -->
+    <style>
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+            color: white;
+            padding: 50px;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #2c2c2c, #000);
+        }
+        img {
+            width: 200px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🎵 Добро пожаловать!</h1>
+    <p>Тапни по экрану, чтобы включить музыку!</p>
+    <img src="Logo.jpg" alt="Логотип">
+
+    <audio id="myAudio" loop>
+        <source src="music.mp3" type="audio/mp3">
+        Ваш браузер не поддерживает аудио.
+    </audio>
+
+    <script>
+        let audio = document.getElementById("myAudio");
+        let isPlaying = false;
+
+        function playMusic() {
+            if (!isPlaying) {
+                audio.play().then(() => {
+                    isPlaying = true;
+                }).catch(err => console.log("Ошибка воспроизведения:", err));
+            }
+        }
+
+        document.addEventListener("click", playMusic);
+        document.addEventListener("touchstart", playMusic); // Для iPhone
+    </script>
+
+</body>
+</html>

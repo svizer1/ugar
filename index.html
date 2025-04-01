@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Музыкальный сайт 📱</title>
-    <link rel="icon" type="image/jpeg" href="Logo.jpg">  <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="Logo.jpg">  
     <style>
         body {
             text-align: center;
@@ -37,18 +37,24 @@
 
     <script>
         let audio = document.getElementById("myAudio");
-        let isPlaying = false;
 
         function playMusic() {
-            if (!isPlaying) {
-                audio.play().then(() => {
-                    isPlaying = true;
-                }).catch(err => console.log("Ошибка воспроизведения:", err));
-            }
+            audio.play().catch(err => console.log("Ошибка воспроизведения:", err));
         }
 
+        // Запуск при касании (для iPhone)
         document.addEventListener("click", playMusic);
-        document.addEventListener("touchstart", playMusic); // Для iPhone
+        document.addEventListener("touchstart", playMusic);
+
+        // Попытка автовоспроизведения после загрузки страницы
+        window.onload = () => {
+            let playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(() => {
+                    console.log("Автовоспроизведение заблокировано. Ожидаем касания.");
+                });
+            }
+        };
     </script>
 
 </body>

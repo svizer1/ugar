@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Музыкальный сайт 📱</title>
-    <link rel="icon" type="image/jpeg" href="Logo.jpg">  
+    <link rel="icon" type="image/jpeg" href="Logo.jpg"> <!-- Логотип во вкладке -->
+    
     <style>
         body {
             text-align: center;
@@ -19,7 +20,8 @@
             background: linear-gradient(135deg, #2c2c2c, #000);
         }
         img {
-            width: 200px;
+            width: 150px;
+            height: auto;
             margin-top: 20px;
         }
     </style>
@@ -28,7 +30,7 @@
 
     <h1>🎵 Добро пожаловать!</h1>
     <p>Тапни по экрану, чтобы включить музыку!</p>
-    <img src="Logo.jpg" alt="Логотип">
+    <img src="Logo.jpg" alt="Логотип"> <!-- Логотип сайта -->
 
     <audio id="myAudio" loop>
         <source src="music.mp3" type="audio/mp3">
@@ -39,22 +41,24 @@
         let audio = document.getElementById("myAudio");
 
         function playMusic() {
-            audio.play().catch(err => console.log("Ошибка воспроизведения:", err));
+            if (audio.paused) {
+                audio.play().then(() => {
+                    console.log("Музыка играет!");
+                }).catch(err => console.log("Ошибка воспроизведения:", err));
+            }
         }
 
-        // Запуск при касании (для iPhone)
+        // Включение музыки при касании экрана
         document.addEventListener("click", playMusic);
         document.addEventListener("touchstart", playMusic);
 
-        // Попытка автовоспроизведения после загрузки страницы
-        window.onload = () => {
-            let playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.catch(() => {
-                    console.log("Автовоспроизведение заблокировано. Ожидаем касания.");
-                });
-            }
-        };
+        // Проверяем, загружается ли логотип
+        document.addEventListener("DOMContentLoaded", () => {
+            let logo = document.querySelector("img");
+            logo.onerror = function() {
+                console.log("⚠ Ошибка: Logo.jpg не найден! Проверь название и местоположение файла.");
+            };
+        });
     </script>
 
 </body>
